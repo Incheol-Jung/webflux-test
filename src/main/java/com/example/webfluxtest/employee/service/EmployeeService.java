@@ -10,6 +10,7 @@ import com.example.webfluxtest.employee.entity.Employee;
 import com.example.webfluxtest.employee.model.InsertEmployeeRequest;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 
 /**  * EmployeeService
  *
@@ -31,6 +32,12 @@ public class EmployeeService {
 			.email(request.getEmail())
 			.phoneNumber(request.getPhoneNumber())
 			.build();
+
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		return employeeRepository.save(employee);
 	}
 
@@ -42,8 +49,9 @@ public class EmployeeService {
 		return Mono.just(Mono
 			.empty()
 			.then()
-			// .doOnNext(consumer)
+			.publishOn(Schedulers.boundedElastic())
 			.doOnSuccess(consumer)
-			.subscribe());
+			.subscribe()
+		);
 	}
 }
