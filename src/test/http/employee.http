@@ -1,5 +1,5 @@
 ### 구직자 조회
-GET http://localhost:9090/employees
+GET http://localhost:8080/employees
 
 > {%
 client.test("Request executed successfully", function() {
@@ -26,7 +26,7 @@ client.test("Request executed successfully", function() {
 %}
 
 ### 2. 구직자 생성(reactiveService)
-POST http://localhost:9090/employees/reactiveService
+POST http://localhost:9090/employees/mono
 Content-Type: application/json
 
 {
