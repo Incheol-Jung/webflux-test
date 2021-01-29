@@ -1,0 +1,60 @@
+### 구직자 조회
+GET http://localhost:9090/employees
+
+> {%
+client.test("Request executed successfully", function() {
+    client.log("response.body" + response.body)
+    client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+### 1. 구직자 생성
+POST http://localhost:9090/employees
+Content-Type: application/json
+
+{
+  "name" : "incheol",
+  "email" : "incheol@naver.com",
+  "phoneNumber" : "010-1111-1111"
+}
+
+> {%
+client.test("Request executed successfully", function() {
+    client.log("response.body" + response.status)
+    client.assert(response.status === 201, "Response status is not 201, it is " + response.status);
+});
+%}
+
+### 2. 구직자 생성(reactiveService)
+POST http://localhost:9090/employees/reactiveService
+Content-Type: application/json
+
+{
+  "name" : "incheol22",
+  "email" : "incheol22@naver.com",
+  "phoneNumber" : "010-2222-2222"
+}
+
+> {%
+client.test("Request executed successfully", function() {
+    client.log("response.body" + response.status)
+    client.assert(response.status === 202, "Response status is not 201, it is " + response.status);
+});
+%}
+
+### 3. 구직자 생성(r2dbcRepository)
+POST http://localhost:9090/employees/r2dbcRepository
+Content-Type: application/json
+
+{
+  "name" : "incheol33",
+  "email" : "incheol33@naver.com",
+  "phoneNumber" : "010-3333-3333"
+}
+
+> {%
+client.test("Request executed successfully", function() {
+    client.log("response.body" + response.status)
+    client.assert(response.status === 202, "Response status is not 201, it is " + response.status);
+});
+%}
