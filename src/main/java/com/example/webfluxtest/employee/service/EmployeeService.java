@@ -1,7 +1,6 @@
 package com.example.webfluxtest.employee.service;
 
 import java.util.List;
-import java.util.function.Consumer;
 
 import org.springframework.stereotype.Service;
 
@@ -50,18 +49,5 @@ public class EmployeeService {
 			.publishOn(Schedulers.parallel())
 			.subscribeOn(Schedulers.boundedElastic())
 			.log();
-	}
-
-	private Mono monoConsumer(Consumer consumer) {
-		return Mono.just(Mono
-			.empty()
-			.then()
-			.log()
-			.publishOn(Schedulers.boundedElastic())
-			.doOnSuccess(consumer)
-			.subscribe()
-
-		);
-
 	}
 }
