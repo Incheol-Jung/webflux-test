@@ -15,6 +15,7 @@ import com.example.webfluxtest.employee.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 
 /**  * EmployeeController
  *
@@ -45,6 +46,6 @@ public class EmployeeController {
 	@ResponseBody
 	public Mono<Employee> insertWithMono(@RequestBody InsertEmployeeRequest request) {
 		log.info("EmployeeController > insertWithMono()");
-		return employeeService.insertWithMono(request);
+		return Mono.defer(() -> employeeService.insertWithMono(request)).publishOn(Schedulers.parallel()).subscribeOn(Schedulers.boundedElastic());
 	}
 }

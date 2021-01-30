@@ -46,8 +46,10 @@ public class EmployeeService {
 
 	public Mono<Employee> insertWithMono(InsertEmployeeRequest request) {
 		log.info("EmployeeService > insertWithMono()");
-		// return monoConsumer(o -> insert(request));
-		return Mono.fromCallable(() -> insert(request)).publishOn(Schedulers.parallel());
+		return Mono.just(insert(request))
+			.publishOn(Schedulers.parallel())
+			.subscribeOn(Schedulers.boundedElastic())
+			.log();
 	}
 
 	private Mono monoConsumer(Consumer consumer) {
@@ -60,7 +62,6 @@ public class EmployeeService {
 			.subscribe()
 
 		);
-
 
 	}
 }
