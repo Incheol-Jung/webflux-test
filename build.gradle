@@ -31,8 +31,8 @@ dependencies {
 
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'io.r2dbc:r2dbc-h2'
-    //    runtimeOnly 'dev.miku:r2dbc-mysql'
-    //    runtimeOnly 'mysql:mysql-connector-java'
+    runtimeOnly 'dev.miku:r2dbc-mysql'
+    runtimeOnly 'mysql:mysql-connector-java'
     //    testImplementation 'io.projectreactor:reactor-test'
 
     // https://mvnrepository.com/artifact/org.bgee.log4jdbc-log4j2/log4jdbc-log4j2-jdbc4.1

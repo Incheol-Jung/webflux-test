@@ -24,6 +24,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Employee {
 	@Id
+	@org.springframework.data.annotation.Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private String name;

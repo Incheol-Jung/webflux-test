@@ -10,14 +10,12 @@ spring:
   application:
     name: webflux-test
   datasource:
-#    driver-class-name: org.hibernate.dialect.H2Dialect
-    url: jdbc:h2:mem:testdb
-    username: sa
-    password:
-    h2:
-      console:
-        enabled: true
-        path: /h2-db
+    url: jdbc:mysql://localhost:3306/storedb?autoReconnect=true&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul
+    username: root
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      connection-test-query: SELECT 1
   jpa:
     database: H2
     generate-ddl: true
@@ -29,18 +27,11 @@ spring:
         format-sql: true
     database-platform: org.hibernate.dialect.H2Dialect
   r2dbc:
-    url: r2dbc:h2:mem:///testdb2
-    name: sa
+    url: r2dbc:mysql://localhost:3306/storedb
+    username: root
+    password: password
     pool:
       initial-size: 100
       max-size: 500
       max-idle-time: 30m
       validation-query: SELECT 1
-
-datasource:
-  article:
-    url: jdbc:h2:mem:testdb
-    username: sa
-  user:
-    url: r2dbc:h2:mem:///testdb2
-    username: sa

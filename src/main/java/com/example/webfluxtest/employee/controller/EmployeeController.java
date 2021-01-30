@@ -12,6 +12,7 @@ import com.example.webfluxtest.employee.model.InsertEmployeeRequest;
 import com.example.webfluxtest.employee.service.ReactiveEmployeeService;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 
 // import com.example.webfluxtest.employee.service.ReactiveEmployeeService;
 
@@ -47,6 +48,8 @@ public class EmployeeController {
 	@ResponseBody
 	public Mono<ResponseEntity> insertWithR2dbcRepository(@RequestBody InsertEmployeeRequest request) {
 		return Mono.just(
-			new ResponseEntity(reactiveEmployeeService.insertWithR2dbcRepository(request), HttpStatus.ACCEPTED));
+			new ResponseEntity(
+				reactiveEmployeeService.insertWithR2dbcRepository(request).subscribeOn(Schedulers.boundedElastic()),
+				HttpStatus.ACCEPTED));
 	}
 }
