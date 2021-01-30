@@ -9,6 +9,7 @@ import com.example.webfluxtest.employee.model.InsertEmployeeRequest;
 import com.example.webfluxtest.employee.reactive.EmployeeR2dbcRepository;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 
 /**  * ReactiveEmployeeService
  *
@@ -39,7 +40,9 @@ public class ReactiveEmployeeService {
 			e.printStackTrace();
 		}
 
-		return Mono.just(employeeR2dbcRepository.save(employee).block());
+		return Mono.just(employeeR2dbcRepository.save(employee).block())
+			.publishOn(Schedulers.parallel())
+			.subscribeOn(Schedulers.boundedElastic());
 	}
 
 	private Mono monoConsumer(Consumer consumer) {

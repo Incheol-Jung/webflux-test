@@ -49,7 +49,9 @@ public class EmployeeController {
 	public Mono<ResponseEntity> insertWithR2dbcRepository(@RequestBody InsertEmployeeRequest request) {
 		return Mono.just(
 			new ResponseEntity(
-				reactiveEmployeeService.insertWithR2dbcRepository(request).subscribeOn(Schedulers.boundedElastic()),
+				reactiveEmployeeService.insertWithR2dbcRepository(request)
+					.publishOn(Schedulers.parallel())
+					.subscribeOn(Schedulers.boundedElastic()),
 				HttpStatus.ACCEPTED));
 	}
 }
