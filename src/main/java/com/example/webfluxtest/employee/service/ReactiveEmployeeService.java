@@ -33,7 +33,7 @@ public class ReactiveEmployeeService {
 			.phoneNumber(request.getPhoneNumber())
 			.build();
 
-		return null;
+		return employeeR2dbcRepository.save(employee);
 	}
 
 	private Mono monoConsumer(Consumer consumer) {
