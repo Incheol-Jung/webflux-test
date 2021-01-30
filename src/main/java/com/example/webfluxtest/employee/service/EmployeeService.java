@@ -9,6 +9,7 @@ import com.example.webfluxtest.employee.dao.EmployeeRepository;
 import com.example.webfluxtest.employee.entity.Employee;
 import com.example.webfluxtest.employee.model.InsertEmployeeRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
@@ -17,6 +18,7 @@ import reactor.core.scheduler.Schedulers;
  * @author incheol.jung
  * @since 2021. 01. 30.
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class EmployeeService {
@@ -27,6 +29,7 @@ public class EmployeeService {
 	}
 
 	public Employee insert(InsertEmployeeRequest request) {
+		log.info("EmployeeService > insert()");
 		Employee employee = Employee.builder()
 			.name(request.getName())
 			.email(request.getEmail())
@@ -42,6 +45,7 @@ public class EmployeeService {
 	}
 
 	public Mono<Employee> insertWithMono(InsertEmployeeRequest request) {
+		log.info("EmployeeService > insertWithMono()");
 		return monoConsumer(o -> insert(request));
 	}
 
@@ -49,9 +53,11 @@ public class EmployeeService {
 		return Mono.just(Mono
 			.empty()
 			.then()
+			.log()
 			.publishOn(Schedulers.boundedElastic())
 			.doOnSuccess(consumer)
 			.subscribe()
+
 		);
 	}
 }
