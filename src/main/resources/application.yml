@@ -1,6 +1,6 @@
 server:
   port: 9090
-  jetty:
+  tomcat:
     threads:
       max: 100
 spring:
